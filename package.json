@@ -1,0 +1,22 @@
+{
+  "name": "tokai.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alvi2496/tokai.js.git"
+  },
+  "author": "Alvi Mahadi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alvi2496/tokai.js/issues"
+  },
+  "homepage": "https://github.com/alvi2496/tokai.js#readme",
+  "dependencies": {
+    "typescript": "^3.8.2"
+  }
+}
