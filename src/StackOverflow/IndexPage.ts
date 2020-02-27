@@ -16,10 +16,10 @@ export class IndexPage extends StackOverflow {
                 href
             })
         }
-        const Questionsummary = {
+        const questionSummary = {
             summary,
             nextPageUrl
         }
-        return Questionsummary
+        return questionSummary
     }
 }

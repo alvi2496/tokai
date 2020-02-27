@@ -1,6 +1,7 @@
 import { Fetcher } from '../Fetcher'
 
 export class StackOverflow extends Fetcher {
+    public baseUrl = 'https://stackoverflow.com'
     public tags = [
         {
             name: 'design-patterns',
