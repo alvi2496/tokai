@@ -1,6 +1,6 @@
-import { Parser } from '../Parser'
+import { Fetcher } from '../Fetcher'
 
-export class StackOverflow extends Parser {
+export class StackOverflow extends Fetcher {
     public tags = [
         {
             name: 'design-patterns',
