@@ -7,7 +7,7 @@ export class Fetcher {
     public fetchPage = async (url: string) => {
         try {
             const page = await axios.get(url)
-            return page
+            return page.data
         } catch (e) {
             console.log(e)
         }
