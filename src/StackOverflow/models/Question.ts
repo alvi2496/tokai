@@ -18,7 +18,7 @@ export class Question extends StackOverflow{
         for(let paragraph of questionParagraphs){
             body = body + ' ' + await this.textProcessor.process(this.$(paragraph).find('p').text())
         }
-        return body
+        return body.trim()
     }
 
     public collect = async () => {

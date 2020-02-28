@@ -1,4 +1,4 @@
-import { StackOverflow } from "./StackOverflow";
+import { StackOverflow } from "./StackOverflow"
 
 export class Answer extends StackOverflow{
 
@@ -10,6 +10,7 @@ export class Answer extends StackOverflow{
             const answerParagraphs: any = this.$(answerBlock).find('.post-text')
             for(let paragraph of answerParagraphs)
                 text = text + ' ' + await this.textProcessor.process(this.$(paragraph).find('p').text())
+            text = text.trim()
             body.push({ text })
         }
         return body
