@@ -1,6 +1,18 @@
-import { Fetcher } from '../Fetcher'
+import cheerio from 'cheerio'
+import { TextProcessor } from '../../TextProcessor'
 
-export class StackOverflow extends Fetcher {
+export class StackOverflow{
+
+    public page: any
+    public $: any
+    public textProcessor: any 
+
+    constructor (page: any) {
+        this.page = page
+        this.$ = cheerio.load(this.page)
+        this.textProcessor = new TextProcessor()
+    }
+
     public baseUrl = 'https://stackoverflow.com'
     public tags = [
         {

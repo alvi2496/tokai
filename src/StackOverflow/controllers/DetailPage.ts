@@ -1,21 +1,16 @@
-import { StackOverflow } from './StackOverflow'
+import { StackOverflow } from '../models/StackOverflow'
 import cheerio from 'cheerio'
-import { TextProcessor } from '../TextProcessor'
+import { TextProcessor } from '../../TextProcessor'
+import { Question } from '../models/Question'
 
-export class DetailPage extends StackOverflow {
+export class DetailPage {
     
     public questionDetail = async (page: any) => {
         const textProcessor = new TextProcessor()
         const $ = cheerio.load(page)
-        const questionHeader = $('#question-header').find('.question-hyperlink').text()
-        const questionUrl = $('.question-hyperlink').attr('href')
-        const questionParagraphs: any = $('.question').find('.post-text')
+        const question = await new Question(page).collect()
         const answerBlocks: any = $('.answer')
-        let question: string = ''
         const answers: any = []
-        for(let paragraph of questionParagraphs){
-            question = question + ' ' + await textProcessor.process($(paragraph).find('p').text())
-        }
         for(let answerBlock of answerBlocks) {
             let text = ''
             const comments: any = []
@@ -31,8 +26,6 @@ export class DetailPage extends StackOverflow {
             answers.push({text, comments}) 
         }
         const questionDetail = {
-            questionHeader,
-            questionUrl,
             question,
             answers
         }

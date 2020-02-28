@@ -1,7 +1,7 @@
-import { StackOverflow } from './StackOverflow'
+import { StackOverflow } from '../models/StackOverflow'
 import cheerio from 'cheerio'
 
-export class IndexPage extends StackOverflow {
+export class IndexPage {
 
     public questionSummary = async (page: any) => {
         const $ = cheerio.load(page)
