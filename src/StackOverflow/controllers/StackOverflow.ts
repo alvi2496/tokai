@@ -1,4 +1,13 @@
+import { Fetcher } from "../../Fetcher"
+
 export class StackOverflow {
+
+    public page: any
+
+    constructor (page: any) {
+        this.page = page
+    }
+
     public baseUrl = 'https://stackoverflow.com'
     public tags = [
         {
