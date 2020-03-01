@@ -66,7 +66,8 @@ export class Scraper {
                     data.push({
                         question: questionText,
                         answer: answerText,
-                        comment: commentText
+                        comment: commentText,
+                        tag: tag.name
                     })
                 }
                 url = questionSummary.nextPageUrl === undefined ? null : this.baseUrl + questionSummary.nextPageUrl
