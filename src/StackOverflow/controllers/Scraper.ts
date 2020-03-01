@@ -1,4 +1,4 @@
-import { StackOverflow } from "./StackOverflow";
+import * as data from '../data/tags.json'
 import { IndexPage } from "./IndexPage"
 import { DetailPage } from "./DetailPage"
 import { Fetcher } from "../../Fetcher"
@@ -10,43 +10,7 @@ export class Scraper {
 
     constructor(){
         this.baseUrl = 'https://stackoverflow.com'
-        this.tags = [
-            // {
-            //     name: 'design-patterns',
-            //     url: 'https://stackoverflow.com/questions/tagged/design-patterns?tab=Newest',
-            //     limit: 1880
-            // },
-            // {
-            //     name: 'software-design',
-            //     url: 'https://stackoverflow.com/questions/tagged/software-design?tab=Newest',
-            //     limit: 97
-            // },
-            // {
-            //     name: 'class-design',
-            //     url: 'https://stackoverflow.com/questions/tagged/class-design?tab=Newest',
-            //     limit: 70
-            // },
-            // {
-            //     name: 'design-principles',
-            //     url: 'https://stackoverflow.com/questions/tagged/design-principles?tab=Newest',
-            //     limit: 18
-            // },
-            // {
-            //     name: 'system-design',
-            //     url: 'https://stackoverflow.com/questions/tagged/system-design?tab=Newest',
-            //     limit: 16
-            // },
-            // {
-            //     name: 'application-design',
-            //     url: 'https://stackoverflow.com/questions/tagged/application-design?tab=Newest',
-            //     limit: 15
-            // },
-            {
-                name: 'code-design',
-                url: 'https://stackoverflow.com/questions/tagged/code-design?tab=Newest',
-                limit: 11
-            }
-        ]
+        this.tags = data.tags
     }
 
     public scrape = async () => {
@@ -64,6 +28,7 @@ export class Scraper {
                     const answerText: string = await questionDetail.answers.map((answer: { text: string }) => answer.text).join(" ")
                     const commentText: string = await questionDetail.comments.map((comment: {text: string}) => comment.text).join(" ")
                     data.push({
+                        url: question.href,
                         question: questionText,
                         answer: answerText,
                         comment: commentText,
