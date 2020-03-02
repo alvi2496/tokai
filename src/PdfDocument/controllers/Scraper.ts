@@ -24,8 +24,8 @@ export class Scraper {
         return text
     }
 
-    public fonts = async () => {
-        const doc = await new Reader(this.fileDir + '1.pdf').readPdf()
+    public fonts = async (docName: any) => {
+        const doc = await new Reader(this.fileDir + docName).readPdf()
         const fonts = await new Text(doc).fontNames()
         return new Set(fonts)
     }

@@ -18,7 +18,18 @@ export class Saver {
             if(err) {
                 return console.log(err)
             }
-            console.log('File was saved')
+            console.log('File was saved!')
+        })
+    }
+
+    public toTxt = async (dir: string) => {
+        if (!fs.existsSync(dir))
+            fs.mkdirSync(dir)
+        fs.writeFile(`${dir}/data.txt`, this.data, async (err) => {
+            if(err) {
+                return console.log(err)
+            }
+            console.log('File was saved!')
         })
     }
 } 
