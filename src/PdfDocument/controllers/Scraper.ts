@@ -1,4 +1,4 @@
-import { Reader } from '../../Reader'
+import { Reader } from '../../utils/Reader'
 import { Text } from '../models/Text'
 import * as data from '../data/docs.json'
 

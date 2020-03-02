@@ -1,7 +1,7 @@
 import * as data from '../data/tags.json'
 import { IndexPage } from "./IndexPage"
 import { DetailPage } from "./DetailPage"
-import { Fetcher } from "../../Fetcher"
+import { Fetcher } from "../../utils/Fetcher"
 
 export class Scraper {
 

@@ -1,5 +1,5 @@
 import { Scraper } from './controllers/Scraper'
-import { Saver } from '../Saver'
+import { Saver } from '../utils/Saver'
 
 const scraper = new Scraper()
 

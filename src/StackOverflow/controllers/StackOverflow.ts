@@ -1,4 +1,4 @@
-import { Fetcher } from "../../Fetcher"
+import { Fetcher } from "../../utils/Fetcher"
 
 export class StackOverflow {
 

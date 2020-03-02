@@ -1,4 +1,4 @@
-import { TextProcessor } from '../../TextProcessor'
+import { TextProcessor } from '../../utils/TextProcessor'
 
 export class PdfDocument {
 
