@@ -1,25 +1,26 @@
 import { Reader } from '../../utils/Reader'
 import { Text } from '../models/Text'
-import * as data from '../data/docs.json'
+import fs from 'fs'
 
 export class Scraper {
 
     fileDir: string
-    files: any
 
     constructor(){
         this.fileDir = process.cwd() + '/src/PdfDocument/data/'
-        this.files = data.files
     }
 
     public scrape = async () => {
         let text: string = ''
-        for(let file of this.files){
-            // console.log(file)
-            const fileInfo = await this.extractFileInfo(file)
-            const doc = await new Reader(this.fileDir + fileInfo.name).readPdf()
-            const texts = await new Text(doc).collect(fileInfo.fonts)
-            text = text + ' ' + texts.join(" ")
+        const folders = await this.folderNames(this.fileDir)
+        for(let folder of folders) {
+            const files = await this.fileNames(this.fileDir + folder)
+            for(let file of files){
+                console.log(`Parsing from ${file}`)
+                const doc = await new Reader(this.fileDir + folder + '/' + file).readPdf()
+                const texts = await new Text(doc).collect()
+                text = text + ' ' + texts.join(" ")
+            }
         }
         return text
     }
@@ -28,6 +29,16 @@ export class Scraper {
         const doc = await new Reader(this.fileDir + docName).readPdf()
         const fonts = await new Text(doc).fontNames()
         return new Set(fonts)
+    }
+
+    fileNames = async (directoryPath: string) => {
+        const files = fs.readdirSync(directoryPath)
+        return files
+    }
+
+    folderNames = async (directoryPath: string) => {
+        const dirs = fs.readdirSync(directoryPath)
+        return dirs
     }
 
     extractFileInfo = async (file: any) => {

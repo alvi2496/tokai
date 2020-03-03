@@ -2,15 +2,13 @@ import { PdfDocument } from "./PdfDocument"
 
 export class Text extends PdfDocument {
 
-    public collect = async (fontNames: any) => {
+    public collect = async () => {
         const texts = []
         const pages = this.doc.pages
         for(let page of pages) {
             const contents = page.content
             for(let content of contents) {
-                if(fontNames.includes(content.fontName)) {
-                    texts.push(await this.textProcessor.process(content.str))
-                }
+                texts.push(await this.textProcessor.process(content.str))
             }
         }
         return texts
