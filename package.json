@@ -19,10 +19,12 @@
   "dependencies": {
     "@types/cheerio": "^0.22.16",
     "@types/json2csv": "^4.5.1",
+    "@types/yargs": "^15.0.4",
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
     "json2csv": "^4.5.4",
     "pdf.js-extract": "^0.1.4",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.2",
+    "yargs": "^15.1.0"
   }
 }

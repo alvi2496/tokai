@@ -1,1 +1,1 @@
-tsc && node exc/index.js
+tsc && node exc/index.js --app=$1
