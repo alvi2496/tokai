@@ -1,3 +1,4 @@
 /node_modules
 /exc
-/data
+/data/
+/src/PdfDocument/data/

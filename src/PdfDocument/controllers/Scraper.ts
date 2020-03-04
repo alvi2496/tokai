@@ -13,6 +13,7 @@ export class Scraper {
     public scrape = async () => {
         let text: string = ''
         const folders = await this.folderNames(this.fileDir)
+        let fileNumber: number = 0
         for(let folder of folders) {
             const files = await this.fileNames(this.fileDir + folder)
             for(let file of files){
@@ -20,8 +21,10 @@ export class Scraper {
                 const doc = await new Reader(this.fileDir + folder + '/' + file).readPdf()
                 const texts = await new Text(doc).collect()
                 text = text + ' ' + texts.join(" ")
+                fileNumber += 1
             }
         }
+        console.log(`${fileNumber} files parsed`)
         return text
     }
 
