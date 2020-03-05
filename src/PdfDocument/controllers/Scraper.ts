@@ -1,6 +1,7 @@
 import { Reader } from '../../utils/Reader'
 import { Text } from '../models/Text'
 import fs from 'fs'
+import { TextProcessor } from '../../utils/TextProcessor'
 
 export class Scraper {
 
@@ -24,6 +25,7 @@ export class Scraper {
                 fileNumber += 1
             }
         }
+        text = await new TextProcessor().process(text)
         console.log(`${fileNumber} files parsed`)
         return text
     }
