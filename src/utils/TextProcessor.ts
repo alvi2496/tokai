@@ -5,6 +5,10 @@ export class TextProcessor {
     constructor(){}
 
     public process = async (text: string) => {
+        // lowercase and trim any leading or trailing spaces
+        text = await text.toLowerCase().trim()
+        //remove all the urls
+        text = await text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '')
         // remove all the punctuations and symbols
         text = await text.replace(/(~|`|!|@|#|$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\”|\“|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|•|©|®|–|〉|=)/g, '')
         // remove all the new lines and tabs
@@ -13,8 +17,6 @@ export class TextProcessor {
         text = await text.replace(/(\b(\w{1,3})\b(\s|$))/g,'')
         // remove all the numbers
         text = await text.replace(/[0-9]/g, '')
-        // lowercase and trim any leading or trailing spaces
-        text = await text.toLowerCase().trim()
         // remove stopwords
         text = await this.removeStopwords(text)
 
@@ -23,14 +25,16 @@ export class TextProcessor {
 
     public removeStopwords = async (text: string) => {
         const stopWords = [
-            'ieee', 'transactions', 'on', 'software', 'engineering', 'university', 'of', 'victoria'
+            'ieee', 'transactions', 'on', 'software', 'engineering', 'university', 'of', 'victoria', 'copyright', 'global', 'copying',
+            'distributing', 'print', 'electric', 'forms', 'without', 'written', 'permission', 'global', 'prohibited', 'chapter', 'abstracti',
+            'abstract', 'introduction', 'conclusion'
         ]
         for(let word of stopWords) 
-            await text.replace(word, '')
+            text = await text.replace(word, '')
         
-        let textArray = await text.split(' ')
+        let textArray = text.split(' ')
         textArray = await Stopword.removeStopwords(textArray)
-        text = await textArray.join(' ')
+        text = textArray.join(' ')
         return text
     }
 
