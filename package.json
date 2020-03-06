@@ -2,8 +2,10 @@
   "name": "tokai.js",
   "version": "0.0.1",
   "description": "Scraper used for collecting data from developer communities",
-  "main": "index.js",
+  "main": "exc/index.js",
   "scripts": {
+    "start": "npm run tsc && node exc/index.js --app=$1",
+    "tsc": "node_modules/typescript/bin/tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +27,7 @@
     "cheerio": "^1.0.0-rc.3",
     "json2csv": "^4.5.4",
     "pdf.js-extract": "^0.1.4",
+    "simple-spellchecker": "^1.0.0",
     "stopword": "^0.3.4",
     "typescript": "^3.8.2",
     "yargs": "^15.1.0"

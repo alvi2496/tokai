@@ -1,1 +1,1 @@
-tsc && node exc/index.js --app=$1
+node_modules/typescript/bin/tsc && node exc/index.js --app=$1

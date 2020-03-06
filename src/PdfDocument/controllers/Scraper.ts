@@ -25,8 +25,8 @@ export class Scraper {
                 fileNumber += 1
             }
         }
-        text = await new TextProcessor().process(text)
         console.log(`${fileNumber} files parsed`)
+        text = await new TextProcessor().process(text)
         return text
     }
 

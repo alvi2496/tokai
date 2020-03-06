@@ -8,7 +8,7 @@ export class Text extends PdfDocument {
         for(let page of pages) {
             const contents = page.content
             for(let content of contents) {
-                texts.push(await this.textProcessor.process(content.str))
+                texts.push(content.str)
             }
         }
         return texts
