@@ -1,5 +1,9 @@
 import Stopword from 'stopword'
-import SpellChecker from 'simple-spellchecker'
+import { Nodehun } from 'nodehun'
+import fs from 'fs'
+
+const affix =  fs.readFileSync(`${process.cwd()}/dictionary/en-GB.aff`)
+const dictionary = fs.readFileSync(`${process.cwd()}/dictionary/en-GB.dic`)
 
 export class TextProcessor {
 
@@ -21,7 +25,7 @@ export class TextProcessor {
         // remove stopwords
         text = await this.removeStopwords(text)
         // replace misspelled words
-        // text = await this.replaceMisspelledWords(text)
+        text = await this.replaceMisspelledWords(text)
 
         return text
     }
@@ -42,26 +46,16 @@ export class TextProcessor {
     }
 
     replaceMisspelledWords = async (text: string) => {
-
-        return new Promise((resolve, reject) => {
-            SpellChecker.getDictionary('en-GB', async (err: any, dict: any) => {
-                let textArray = text.split(' ')
-                for(let word of textArray) {
-                    if(dict.isMisspelled(word))
-                    {
-                        if(dict.getSuggestions(word).suggestions) {
-                            console.log(`word: ${word}, suggestions: ${dict.getSuggestions.suggestions(word)}`)
-                            text = await text.replace(word, dict.getSuggestions(word).suggestions.join(" "))
-                        }
-                        else {
-                            console.log(`word: ${word}, suggestions: ${dict.getSuggestions(word)}`)
-                            text = await text.replace(word, dict.getSuggestions(word).join(" "))
-                        }       
-                    }      
-                }
-            })
-            return resolve(text)
-        })  
+        const nodehun = new Nodehun(affix, dictionary)
+        let textArray = text.split(" ")
+        for(let word of textArray) {
+            if(!await nodehun.spell(word)) {
+                const suggest = await nodehun.suggest(word)
+                if(suggest !== null)
+                    text = text.replace(word, suggest.join(' '))
+            }
+        }
+        return text
     }
 
 }

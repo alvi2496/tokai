@@ -26,8 +26,8 @@
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
     "json2csv": "^4.5.4",
+    "nodehun": "^3.0.1",
     "pdf.js-extract": "^0.1.4",
-    "simple-spellchecker": "^1.0.0",
     "stopword": "^0.3.4",
     "typescript": "^3.8.2",
     "yargs": "^15.1.0"
