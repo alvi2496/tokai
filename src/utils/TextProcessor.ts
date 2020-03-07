@@ -2,8 +2,8 @@ import Stopword from 'stopword'
 import { Nodehun } from 'nodehun'
 import fs from 'fs'
 
-const affix =  fs.readFileSync(`${process.cwd()}/dictionary/en-GB.aff`)
-const dictionary = fs.readFileSync(`${process.cwd()}/dictionary/en-GB.dic`)
+// const affix =  fs.readFileSync(`${process.cwd()}/dictionary/en-GB.aff`)
+// const dictionary = fs.readFileSync(`${process.cwd()}/dictionary/en-GB.dic`)
 
 export class TextProcessor {
 
@@ -46,16 +46,34 @@ export class TextProcessor {
     }
 
     replaceMisspelledWords = async (text: string) => {
-        const nodehun = new Nodehun(affix, dictionary)
+        const nodehun = await this.createDictionary()
         let textArray = text.split(" ")
         for(let word of textArray) {
-            if(!await nodehun.spell(word)) {
-                const suggest = await nodehun.suggest(word)
+            let trimed = word.trim()
+            if(!(await nodehun.spell(trimed))) {
+                const suggest = await nodehun.suggest(trimed)
                 if(suggest !== null)
-                    text = text.replace(word, suggest.join(' '))
+                    text = await text.replace(word, suggest.join(" "))
+                else
+                    text = await text.replace(word, "")
             }
         }
         return text
+    }
+
+    createDictionary = async () => {
+        const en_GB_affix = fs.readFileSync(`${process.cwd()}/dictionary/en_GB.aff`)
+        const en_GB_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_GB.dic`)
+        const en_AU_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_AU.dic`)
+        const en_CA_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_CA.dic`)
+        const en_US_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_US.dic`)
+        const en_ZA_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_ZA.dic`)
+        let nodehun = new Nodehun(en_GB_affix, en_GB_dic)
+        await nodehun.addDictionary(en_AU_dic)
+        await nodehun.addDictionary(en_CA_dic)
+        await nodehun.addDictionary(en_US_dic)
+        await nodehun.addDictionary(en_ZA_dic)
+        return nodehun
     }
 
 }
