@@ -47,18 +47,32 @@ export class TextProcessor {
 
     replaceMisspelledWords = async (text: string) => {
         const nodehun = await this.createDictionary()
-        let textArray = text.split(" ")
-        for(let word of textArray) {
-            let trimed = word.trim()
-            if(!(await nodehun.spell(trimed))) {
-                const suggest = await nodehun.suggest(trimed)
-                if(suggest !== null)
-                    text = await text.replace(word, suggest.join(" "))
-                else
-                    text = await text.replace(word, "")
+        const words = await this.divideWords(text)
+        for(let word of words.wrong) {
+            const suggestions = await nodehun.suggest(word)
+            if(suggestions){
+                for(let suggestion of suggestions) {
+                    if(words.right.includes(suggestion))
+                        words.right.push(suggestion)
+                }
             }
         }
-        return text
+        return words.right.join(" ")
+    }
+
+    divideWords = async (text: string) => {
+        const nodehun = await this.createDictionary()
+        let textArray = text.split(" ")
+        const right = [], wrong = []
+        for(let word of textArray) {
+            let trimed = word.trim()
+            if(await nodehun.spell(trimed))
+                if(trimed !== '') right.push(trimed)
+            else
+                wrong.push(trimed)
+        }
+
+        return {right, wrong}
     }
 
     createDictionary = async () => {
@@ -73,7 +87,7 @@ export class TextProcessor {
         await nodehun.addDictionary(en_CA_dic)
         await nodehun.addDictionary(en_US_dic)
         await nodehun.addDictionary(en_ZA_dic)
+        
         return nodehun
     }
-
 }
