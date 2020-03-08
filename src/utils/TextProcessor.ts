@@ -2,9 +2,6 @@ import Stopword from 'stopword'
 import { Nodehun } from 'nodehun'
 import fs from 'fs'
 
-// const affix =  fs.readFileSync(`${process.cwd()}/dictionary/en-GB.aff`)
-// const dictionary = fs.readFileSync(`${process.cwd()}/dictionary/en-GB.dic`)
-
 export class TextProcessor {
 
     constructor(){}
@@ -26,6 +23,8 @@ export class TextProcessor {
         text = await this.removeStopwords(text)
         // replace misspelled words
         text = await this.replaceMisspelledWords(text)
+        // again remove all the words with length < 3
+        text = await text.replace(/(\b(\w{1,3})\b(\s|$))/g,'')
 
         return text
     }
