@@ -1,40 +1,51 @@
 {
-    "tags" : [
+    "categories": [
         {
-            "name": "design-patterns",
-            "url": "https://stackoverflow.com/questions/tagged/design-patterns?tab=Newest"
+            "label": "design",
+            "tags" : [
+                {
+                    "name": "design-patterns",
+                    "url": "https://stackoverflow.com/questions/tagged/design-patterns?tab=Newest"
+                },
+                {
+                    "name": "software-design",
+                    "url": "https://stackoverflow.com/questions/tagged/software-design?tab=Newest"
+                },
+                {
+                    "name": "class-design",
+                    "url": "https://stackoverflow.com/questions/tagged/class-design?tab=Newest"
+                },
+                {
+                    "name": "design-principles",
+                    "url": "https://stackoverflow.com/questions/tagged/design-principles?tab=Newest"
+                },
+                {
+                    "name": "system-design",
+                    "url": "https://stackoverflow.com/questions/tagged/system-design?tab=Newest"
+                },
+                {
+                    "name": "application-design",
+                    "url": "https://stackoverflow.com/questions/tagged/application-design?tab=Newest"
+                },
+                {
+                    "name": "code-design",
+                    "url": "https://stackoverflow.com/questions/tagged/code-design?tab=Newest"
+                },
+                {
+                    "name": "api-design",
+                    "url": "https://stackoverflow.com/questions/tagged/api-design?tab=Newest"
+                },
+                {
+                    "name": "language-design",
+                    "url": "https://stackoverflow.com/questions/tagged/language-design?tab=Newest"
+                }
+            ]
         },
         {
-            "name": "software-design",
-            "url": "https://stackoverflow.com/questions/tagged/software-design?tab=Newest"
-        },
-        {
-            "name": "class-design",
-            "url": "https://stackoverflow.com/questions/tagged/class-design?tab=Newest"
-        },
-        {
-            "name": "design-principles",
-            "url": "https://stackoverflow.com/questions/tagged/design-principles?tab=Newest"
-        },
-        {
-            "name": "system-design",
-            "url": "https://stackoverflow.com/questions/tagged/system-design?tab=Newest"
-        },
-        {
-            "name": "application-design",
-            "url": "https://stackoverflow.com/questions/tagged/application-design?tab=Newest"
-        },
-        {
-            "name": "code-design",
-            "url": "https://stackoverflow.com/questions/tagged/code-design?tab=Newest"
-        },
-        {
-            "name": "api-design",
-            "url": "https://stackoverflow.com/questions/tagged/api-design?tab=Newest"
-        },
-        {
-            "name": "language-design",
-            "url": "https://stackoverflow.com/questions/tagged/language-design?tab=Newest"
+            "label": "general",
+            "tags": [
+                
+            ]
         }
-    ]
+    ]    
 }
