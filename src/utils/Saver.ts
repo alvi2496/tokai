@@ -7,6 +7,10 @@ export class Saver {
 
     constructor(data: any) {
         this.data = data
+        if (!fs.existsSync(`${process.cwd()}/data`)) 
+            fs.mkdirSync(`${process.cwd()}/data`)
+        if (!fs.existsSync(`${process.cwd()}/log`)) 
+            fs.mkdirSync(`${process.cwd()}/log`)
     }
 
     public toCsv = async (dir: string) => {
@@ -30,6 +34,14 @@ export class Saver {
                 return console.log(err)
             }
             console.log('File was saved!')
+        })
+    }
+
+    toLog = async (dir: string) => {
+       fs.appendFile(`${process.cwd()}/log/${dir}.log`, this.data, async (err) => {
+            if(err) {
+                return console.log(err)
+            }
         })
     }
 } 

@@ -3,6 +3,7 @@ import { IndexPage } from "./IndexPage"
 import { DetailPage } from "./DetailPage"
 import { Fetcher } from "../../utils/Fetcher"
 import { TextProcessor } from '../../utils/TextProcessor'
+import { Saver } from '../../utils/Saver'
 
 export class Scraper {
 
@@ -13,12 +14,15 @@ export class Scraper {
     }
 
     public scrape = async () => {
+        const logHead: string = `Starting Parsing on ${new Date().toDateString()} at ${new Date().toTimeString()}\n`
+        await new Saver(logHead).toLog('StackOverflow')
         const rows: any = []
         for(let category of data.categories) {
             for(let tag of category.tags){
                 let url: any = tag.url
                 while(url !== undefined && url !== null) {
                     console.log(`Parsing data from ${url}`)
+                    await new Saver(`Parsing data from ${url}\n`).toLog('StackOverflow')
                     const indexPage = await new Fetcher(url).fetchPage()
                     const questionSummary = await new IndexPage(indexPage).questionSummary()
                     for(let question of questionSummary.questions) {

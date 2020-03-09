@@ -2,6 +2,7 @@ import { Reader } from '../../utils/Reader'
 import { Text } from '../models/Text'
 import fs from 'fs'
 import { TextProcessor } from '../../utils/TextProcessor'
+import { Saver } from '../../utils/Saver'
 
 export class Scraper {
 
@@ -13,12 +14,15 @@ export class Scraper {
 
     public scrape = async () => {
         let text: string = ''
+        const logHead: string = `Starting Parsing on ${new Date().toDateString()} at ${new Date().toTimeString()}\n`
+        await new Saver(logHead).toLog('PdfDocument')
         const folders = await this.folderNames(this.fileDir)
         let fileNumber: number = 0
         for(let folder of folders) {
             const files = await this.fileNames(this.fileDir + folder)
             for(let file of files){
                 console.log(`Parsing from ${file}`)
+                await new Saver(`Parsing from ${file}\n`).toLog('PdfDocument')
                 const doc = await new Reader(this.fileDir + folder + '/' + file).readPdf()
                 const texts = await new Text(doc).collect()
                 text = text + ' ' + texts.join(" ")
