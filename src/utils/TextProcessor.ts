@@ -12,7 +12,9 @@ export class TextProcessor {
         //remove all the urls
         text = await text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '')
         // remove all the punctuations and symbols
-        text = await text.replace(/(~|`|!|@|#|\$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\”|\“|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|•|©|®|–|〉|=)/g, '')
+        text = await text.replace(/(~|`|!|@|#|\$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\”|\“|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|•|φ|©|®|–|〉|=)/g, '')
+        // clean anything that is not character
+        text = await text.replace(/[^a-z ]+/g, '')
         // remove all the new lines and tabs
         text = await text.replace(/\n\t/ig, '').replace(/\s+|\'|\’/g, " ")
         // remove all the words with length < 3
