@@ -6,7 +6,7 @@ export class Comment extends StackOverflow{
         const commentParagraphs: any = this.$('.comments').find('li')
         const comments: any = []
         for(let paragraph of commentParagraphs) {
-            const comment: string = await this.textProcessor.process(this.$(paragraph).find('.comment-copy').text())
+            const comment: string = await this.$(paragraph).find('.comment-copy').text()
             comments.push({text: comment})
         }
         return comments

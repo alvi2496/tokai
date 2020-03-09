@@ -16,7 +16,7 @@ export class Question extends StackOverflow{
         const questionParagraphs: any = this.$('.question').find('.post-text')
         let body: string = ''
         for(let paragraph of questionParagraphs){
-            body = body + ' ' + await this.textProcessor.process(this.$(paragraph).find('p').text())
+            body = body + ' ' + await this.$(paragraph).find('p').text()
         }
         return body.trim()
     }

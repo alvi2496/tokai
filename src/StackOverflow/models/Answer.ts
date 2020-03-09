@@ -9,7 +9,7 @@ export class Answer extends StackOverflow{
             let text = ''
             const answerParagraphs: any = this.$(answerBlock).find('.post-text')
             for(let paragraph of answerParagraphs)
-                text = text + ' ' + await this.textProcessor.process(this.$(paragraph).find('p').text())
+                text = text + ' ' + await this.$(paragraph).find('p').text()
             text = text.trim()
             body.push({ text })
         }

@@ -4,9 +4,22 @@ import fs from 'fs'
 
 export class TextProcessor {
 
-    constructor(){}
+    data: any
 
-    public process = async (text: any) => {
+    constructor(data: any){
+        this.data = data
+    }
+
+    public processText = async () => {
+        console.log(this.data)
+        return this.process(this.data.text)
+    }
+
+    public processCsv = async () => {
+
+    }
+
+    public process = async (text: string) => {
         // lowercase and trim any leading or trailing spaces
         text = await text.toLowerCase().trim()
         //remove all the urls

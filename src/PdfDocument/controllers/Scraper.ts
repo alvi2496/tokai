@@ -30,8 +30,7 @@ export class Scraper {
             }
         }
         console.log(`${fileNumber} files parsed`)
-        text = await new TextProcessor().process(text)
-        return text
+        return { text: text }
     }
 
     public fonts = async (docName: any) => {

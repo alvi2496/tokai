@@ -10,6 +10,5 @@ export class StackOverflow{
     constructor (page: any) {
         this.page = page
         this.$ = cheerio.load(this.page)
-        this.textProcessor = new TextProcessor()
     }
 }
