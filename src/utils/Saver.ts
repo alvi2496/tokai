@@ -18,11 +18,11 @@ export class Saver {
         const csv = await parser.parse(this.data)
         if (!fs.existsSync(dir)) 
             fs.mkdirSync(dir)
-        fs.writeFile(`${dir}/data.csv`, csv, async (err) => {
+        fs.appendFile(`${dir}/data.csv`, csv, async (err) => {
             if(err) {
                 return console.log(err)
             }
-            console.log('File was saved!')
+            console.log('chunk was saved!')
         })
     }
 
@@ -39,6 +39,14 @@ export class Saver {
 
     toLog = async (dir: string) => {
        fs.appendFile(`${process.cwd()}/log/${dir}.log`, this.data, async (err) => {
+            if(err) {
+                return console.log(err)
+            }
+        })
+    }
+
+    public toLine = async (dir: string) => {
+        fs.appendFile(`${process.cwd()}/data/${dir}`, this.data, async (err) => {
             if(err) {
                 return console.log(err)
             }

@@ -4,19 +4,11 @@ import fs from 'fs'
 
 export class TextProcessor {
 
-    data: any
-
-    constructor(data: any){
-        this.data = data
+    constructor(){
     }
 
-    public processText = async () => {
-        console.log(this.data)
-        return this.process(this.data.text)
-    }
-
-    public processCsv = async () => {
-
+    public processText = async (text: string) => {
+        return await this.process(text)
     }
 
     public process = async (text: string) => {
@@ -25,15 +17,15 @@ export class TextProcessor {
         //remove all the urls
         text = await text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '')
         // remove all the punctuations and symbols
-        text = await text.replace(/(~|`|!|@|#|\$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\”|\“|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|•|φ|©|®|–|〉|=)/g, '')
+        .replace(/(~|`|!|@|#|\$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\”|\“|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|•|φ|©|®|–|〉|=)/g, '')
         // clean anything that is not character
-        text = await text.replace(/[^a-z ]+/g, '')
+        .replace(/[^a-z ]+/g, '')
         // remove all the new lines and tabs
-        text = await text.replace(/\n\t/ig, '').replace(/\s+|\'|\’/g, " ")
+        .replace(/\n\t/ig, '').replace(/\s+|\'|\’/g, " ")
         // remove all the words with length < 3
-        text = await text.replace(/(\b(\w{1,3})\b(\s|$))/g,'')
+        .replace(/(\b(\w{1,3})\b(\s|$))/g,'')
         // remove all the numbers
-        text = await text.replace(/[0-9]/g, '')
+        .replace(/[0-9]/g, '')
         // remove stopwords
         text = await this.removeStopwords(text)
         // replace misspelled words
@@ -54,8 +46,10 @@ export class TextProcessor {
             text = await text.replace(word, '')
         
         let textArray = text.split(' ')
+        text = ''
         textArray = await Stopword.removeStopwords(textArray)
         text = textArray.join(' ')
+        textArray = []
         return text
     }
 
@@ -63,15 +57,19 @@ export class TextProcessor {
         const nodehun = await this.createDictionary()
         const words = await this.divideWords(text)
         for(let word of words.wrong) {
-            const suggestions = await nodehun.suggest(word)
+            let suggestions = await nodehun.suggest(word)
             if(suggestions){
                 for(let suggestion of suggestions) {
                     if(words.right.includes(suggestion))
                         words.right.push(suggestion)
                 }
             }
+            suggestions = []
         }
-        return words.right.join(" ")
+        text = words.right.join(" ")
+        words.wrong = []
+        words.right = []
+        return text
     }
 
     divideWords = async (text: string) => {

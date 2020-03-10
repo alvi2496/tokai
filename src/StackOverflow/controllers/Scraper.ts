@@ -16,22 +16,24 @@ export class Scraper {
     public scrape = async () => {
         const logHead: string = `Starting Parsing on ${new Date().toDateString()} at ${new Date().toTimeString()}\n`
         await new Saver(logHead).toLog('StackOverflow')
-        const rows: any = []
+        await new Saver('"url","question","answer","comment","tag","label"\n').toLine('StackOverflow/data.csv')
+        const tp = new TextProcessor()
         for(let category of data.categories) {
             for(let tag of category.tags){
                 let url: any = tag.url
                 while(url !== undefined && url !== null) {
+                    let rows = []
                     console.log(`Parsing data from ${url}`)
                     await new Saver(`Parsing data from ${url}\n`).toLog('StackOverflow')
-                    const indexPage = await new Fetcher(url).fetchPage()
-                    const questionSummary = await new IndexPage(indexPage).questionSummary()
+                    let indexPage = await new Fetcher(url).fetchPage()
+                    let questionSummary: any = await new IndexPage(indexPage).questionSummary()
                     for(let question of questionSummary.questions) {
-                        const detailPage = await new Fetcher(this.baseUrl + question.href).fetchPage()
-                        const questionDetail = await new DetailPage(detailPage).questionDetail()
-                        let questionText: string = questionDetail.question.header + " " + questionDetail.question.body
-                        let answerText: string = await questionDetail.answers.map((answer: { text: string }) => answer.text).join(" ")
-                        let commentText: string = await questionDetail.comments.map((comment: {text: string}) => comment.text).join(" ")
-
+                        let detailPage = await new Fetcher(this.baseUrl + question.href).fetchPage()
+                        let questionDetail: any = await new DetailPage(detailPage).questionDetail()
+                        let questionText: string = await tp.processText(questionDetail.question.header + " " + questionDetail.question.body)
+                        let answerText: string = await tp.processText(await questionDetail.answers.map((answer: { text: string }) => answer.text).join(" "))
+                        let commentText: string = await tp.processText(await questionDetail.comments.map((comment: {text: string}) => comment.text).join(" "))
+                        
                         rows.push({
                             url: question.href,
                             question: questionText,
@@ -40,11 +42,22 @@ export class Scraper {
                             tag: tag.name,
                             label: category.label
                         })
+                        detailPage = ''
+                        questionDetail = {}
+                        questionText = ''
+                        answerText = ''
+                        commentText = ''
                     }
+                    for(let row of rows) {
+                        const r = `"${row.url}","${row.question}","${row.answer}","${row.comment}","${row.tag}","${row.label}"\n`
+                        await new Saver(r).toLine('StackOverflow/data.csv')
+                    }
+                    rows = []
                     url = questionSummary.nextPageUrl === undefined ? null : this.baseUrl + questionSummary.nextPageUrl
+                    indexPage = {}
+                    questionSummary = {}
                 }
             }
         }
-        return rows
     }
 } 
