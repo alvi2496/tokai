@@ -31,7 +31,7 @@ export class TextProcessor {
         return text
     }
 
-    removeStopwords = async (text: string) => {
+    removeStopwords = async (text: any) => {
         const stopWords = [
             'ieee', 'transactions', 'on', 'software', 'engineering', 'university', 'of', 'victoria', 'copyright', 'global', 'copying',
             'distributing', 'print', 'electric', 'forms', 'without', 'written', 'permission', 'global', 'prohibited', 'chapter', 'abstracti',
@@ -41,28 +41,32 @@ export class TextProcessor {
             text = await text.replace(word, '')
         
         let textArray = text.split(' ')
+        text = null
         textArray = await Stopword.removeStopwords(textArray)
         text = textArray.join(' ')
+        textArray = null
         return text
     }
 
     // replaceMisspelledWords = async (text: string) => {
-    //     const nodehun = await this.createDictionary()
-    //     const words = await this.divideWords(text)
+    //     let nodehun = await this.createDictionary()
+    //     let words: any = await this.divideWords(text)
     //     for(let word of words.wrong) {
-    //         const suggestions = await nodehun.suggest(word)
+    //         let suggestions: any = await nodehun.suggest(word)
     //         if(suggestions){
     //             for(let suggestion of suggestions) {
     //                 if(words.right.includes(suggestion))
     //                     words.right.push(suggestion)
     //             }
     //         }
+    //         suggestions = null
     //     }
+    //     nodehun = null
     //     return words.right.join(" ")
     // }
 
     // divideWords = async (text: string) => {
-    //     const nodehun = await this.createDictionary()
+    //     let nodehun = await this.createDictionary()
     //     let textArray = text.split(" ")
     //     const right = [], wrong = []
     //     for(let word of textArray) {

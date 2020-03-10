@@ -2,7 +2,7 @@ import * as data from '../data/tags.json'
 import { IndexPage } from "./IndexPage"
 import { DetailPage } from "./DetailPage"
 import { Fetcher } from "../../utils/Fetcher"
-// import { TextProcessor } from '../../utils/TextProcessor'
+import { TextProcessor } from '../../utils/TextProcessor'
 import { Saver } from '../../utils/Saver'
 
 export class Scraper {
@@ -33,9 +33,9 @@ export class Scraper {
                         let commentText: any = await questionDetail.comments.map((comment: {text: string}) => comment.text).join(" ")
 
                         // process the texts
-                        // questionText = await new TextProcessor().process(questionText)
-                        // answerText = await new TextProcessor().process(answerText)
-                        // commentText = await new TextProcessor().process(commentText)
+                        questionText = await new TextProcessor().process(questionText)
+                        answerText = await new TextProcessor().process(answerText)
+                        commentText = await new TextProcessor().process(commentText)
                         rows.push({
                             url: question.href,
                             question: questionText,
