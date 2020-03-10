@@ -7,16 +7,16 @@ export class DetailPage extends StackOverflow {
     
     public questionDetail = async () => {
 
-        const question = await new Question(this.page).collect()
-        const answers = await new Answer(this.page).collect()
-        const comments = await new Comment(this.page).collect()
+        let question: any = await new Question(this.page).collect()
+        let answers: any = await new Answer(this.page).collect()
+        let comments: any = await new Comment(this.page).collect()
 
-        const questionDetail = {
+        let questionDetail: any = {
             question,
             answers,
             comments
         }
-
+        question = answers = comments = null
         return questionDetail
     }
 }

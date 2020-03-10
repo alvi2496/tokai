@@ -2,7 +2,7 @@ import * as data from '../data/tags.json'
 import { IndexPage } from "./IndexPage"
 import { DetailPage } from "./DetailPage"
 import { Fetcher } from "../../utils/Fetcher"
-import { TextProcessor } from '../../utils/TextProcessor'
+// import { TextProcessor } from '../../utils/TextProcessor'
 import { Saver } from '../../utils/Saver'
 
 export class Scraper {
@@ -23,14 +23,14 @@ export class Scraper {
                 while(url !== undefined && url !== null) {
                     console.log(`Parsing data from ${url}`)
                     await new Saver(`Parsing data from ${url}\n`).toLog('StackOverflow')
-                    const indexPage = await new Fetcher(url).fetchPage()
+                    let indexPage = await new Fetcher(url).fetchPage()
                     const questionSummary = await new IndexPage(indexPage).questionSummary()
                     for(let question of questionSummary.questions) {
-                        const detailPage = await new Fetcher(this.baseUrl + question.href).fetchPage()
-                        const questionDetail = await new DetailPage(detailPage).questionDetail()
-                        let questionText: string = questionDetail.question.header + " " + questionDetail.question.body
-                        let answerText: string = await questionDetail.answers.map((answer: { text: string }) => answer.text).join(" ")
-                        let commentText: string = await questionDetail.comments.map((comment: {text: string}) => comment.text).join(" ")
+                        let detailPage = await new Fetcher(this.baseUrl + question.href).fetchPage()
+                        let questionDetail = await new DetailPage(detailPage).questionDetail()
+                        let questionText: any = questionDetail.question.header + " " + questionDetail.question.body
+                        let answerText: any = await questionDetail.answers.map((answer: { text: string }) => answer.text).join(" ")
+                        let commentText: any = await questionDetail.comments.map((comment: {text: string}) => comment.text).join(" ")
 
                         // process the texts
                         // questionText = await new TextProcessor().process(questionText)
@@ -44,7 +44,9 @@ export class Scraper {
                             tag: tag.name,
                             label: category.label
                         })
+                        detailPage = questionDetail = questionText = answerText = commentText = null
                     }
+                    indexPage = null
                     url = questionSummary.nextPageUrl === undefined ? null : this.baseUrl + questionSummary.nextPageUrl
                 }
             }
