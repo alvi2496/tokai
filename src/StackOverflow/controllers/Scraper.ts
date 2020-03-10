@@ -33,9 +33,9 @@ export class Scraper {
                         let commentText: string = await questionDetail.comments.map((comment: {text: string}) => comment.text).join(" ")
 
                         // process the texts
-                        questionText = await new TextProcessor().process(questionText)
-                        answerText = await new TextProcessor().process(answerText)
-                        commentText = await new TextProcessor().process(commentText)
+                        // questionText = await new TextProcessor().process(questionText)
+                        // answerText = await new TextProcessor().process(answerText)
+                        // commentText = await new TextProcessor().process(commentText)
                         rows.push({
                             url: question.href,
                             question: questionText,
