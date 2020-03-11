@@ -24,9 +24,9 @@ export class TextProcessor {
         // remove stopwords
         text = await this.removeStopwords(text)
         // replace misspelled words
-        // text = await this.replaceMisspelledWords(text)
+        text = await this.replaceMisspelledWords(text)
         // again remove all the words with length < 3
-        // text = await text.replace(/(\b(\w{1,3})\b(\s|$))/g,'')
+        text = await text.replace(/(\b(\w{1,3})\b(\s|$))/g,'')
 
         return text
     }
