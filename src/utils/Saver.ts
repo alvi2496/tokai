@@ -18,11 +18,11 @@ export class Saver {
         const csv = await parser.parse(this.data)
         if (!fs.existsSync(dir)) 
             fs.mkdirSync(dir)
-        fs.writeFile(`${dir}/data.csv`, csv, async (err) => {
+        fs.appendFile(`${dir}/data.csv`, csv, async (err) => {
             if(err) {
                 return console.log(err)
             }
-            console.log('File was saved!')
+            console.log('Chunk saved!')
         })
     }
 

@@ -1,5 +1,5 @@
 import Stopword from 'stopword'
-// import { Nodehun } from 'nodehun'
+import { Nodehun } from 'nodehun'
 import fs from 'fs'
 
 export class TextProcessor {
@@ -26,7 +26,7 @@ export class TextProcessor {
         // replace misspelled words
         // text = await this.replaceMisspelledWords(text)
         // again remove all the words with length < 3
-        text = await text.replace(/(\b(\w{1,3})\b(\s|$))/g,'')
+        // text = await text.replace(/(\b(\w{1,3})\b(\s|$))/g,'')
 
         return text
     }
@@ -48,51 +48,51 @@ export class TextProcessor {
         return text
     }
 
-    // replaceMisspelledWords = async (text: string) => {
-    //     let nodehun = await this.createDictionary()
-    //     let words: any = await this.divideWords(text)
-    //     for(let word of words.wrong) {
-    //         let suggestions: any = await nodehun.suggest(word)
-    //         if(suggestions){
-    //             for(let suggestion of suggestions) {
-    //                 if(words.right.includes(suggestion))
-    //                     words.right.push(suggestion)
-    //             }
-    //         }
-    //         suggestions = null
-    //     }
-    //     nodehun = null
-    //     return words.right.join(" ")
-    // }
+    replaceMisspelledWords = async (text: string) => {
+        let nodehun: any = await this.createDictionary()
+        let words: any = await this.divideWords(text)
+        for(let word of words.wrong) {
+            let suggestions: any = await nodehun.suggest(word)
+            if(suggestions){
+                for(let suggestion of suggestions) {
+                    if(words.right.includes(suggestion))
+                        words.right.push(suggestion)
+                }
+            }
+            suggestions = null
+        }
+        nodehun = null
+        return words.right.join(" ")
+    }
 
-    // divideWords = async (text: string) => {
-    //     let nodehun = await this.createDictionary()
-    //     let textArray = text.split(" ")
-    //     const right = [], wrong = []
-    //     for(let word of textArray) {
-    //         let trimed = word.trim()
-    //         if(await nodehun.spell(trimed))
-    //             if(trimed !== '') right.push(trimed)
-    //         else
-    //             wrong.push(trimed)
-    //     }
+    divideWords = async (text: string) => {
+        let nodehun = await this.createDictionary()
+        let textArray = text.split(" ")
+        const right = [], wrong = []
+        for(let word of textArray) {
+            let trimed = word.trim()
+            if(await nodehun.spell(trimed))
+                if(trimed !== '') right.push(trimed)
+            else
+                wrong.push(trimed)
+        }
 
-    //     return {right, wrong}
-    // }
+        return {right, wrong}
+    }
 
-    // createDictionary = async () => {
-    //     const en_GB_affix = fs.readFileSync(`${process.cwd()}/dictionary/en_GB.aff`)
-    //     const en_GB_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_GB.dic`)
-    //     const en_AU_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_AU.dic`)
-    //     const en_CA_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_CA.dic`)
-    //     const en_US_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_US.dic`)
-    //     const en_ZA_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_ZA.dic`)
-    //     let nodehun = new Nodehun(en_GB_affix, en_GB_dic)
-    //     await nodehun.addDictionary(en_AU_dic)
-    //     await nodehun.addDictionary(en_CA_dic)
-    //     await nodehun.addDictionary(en_US_dic)
-    //     await nodehun.addDictionary(en_ZA_dic)
+    createDictionary = async () => {
+        const en_GB_affix = fs.readFileSync(`${process.cwd()}/dictionary/en_GB.aff`)
+        const en_GB_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_GB.dic`)
+        const en_AU_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_AU.dic`)
+        const en_CA_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_CA.dic`)
+        const en_US_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_US.dic`)
+        const en_ZA_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_ZA.dic`)
+        let nodehun = new Nodehun(en_GB_affix, en_GB_dic)
+        await nodehun.addDictionary(en_AU_dic)
+        await nodehun.addDictionary(en_CA_dic)
+        await nodehun.addDictionary(en_US_dic)
+        await nodehun.addDictionary(en_ZA_dic)
         
-    //     return nodehun
-    // }
+        return nodehun
+    }
 }

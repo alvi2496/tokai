@@ -4,5 +4,6 @@ import { Saver } from '../utils/Saver'
 const scraper = new Scraper()
 
 scraper.scrape().then((data) => {
-    new Saver(data).toCsv(process.cwd() + '/data/StackOverflow')
+    // new Saver(data).toCsv(process.cwd() + '/data/StackOverflow')
+    console.log('Whole data is saved!')
 })
