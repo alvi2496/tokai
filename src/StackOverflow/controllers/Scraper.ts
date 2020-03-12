@@ -18,6 +18,7 @@ export class Scraper {
         await new Saver(logHead).toLog('StackOverflow')
         const dictionary = await new Dictionary().create()
         const textProcessor = new TextProcessor()
+        let firstChunk = true
         for(let category of data.categories) {
             for(let tag of category.tags){
                 let url: any = tag.url
@@ -53,7 +54,12 @@ export class Scraper {
                         answerText = null
                         commentText = null
                     }
-                    await new Saver(rows).toCsv(process.cwd() + '/data/StackOverflow')
+                    if(firstChunk){
+                        await new Saver(rows).toCsv(process.cwd() + '/data/StackOverflow')
+                        firstChunk = false
+                    } 
+                    else
+                        await new Saver(rows).toCsv(process.cwd() + '/data/StackOverflow', false)
                     rows = null
                     indexPage = null
                     url = questionSummary.nextPageUrl === undefined ? null : this.baseUrl + questionSummary.nextPageUrl

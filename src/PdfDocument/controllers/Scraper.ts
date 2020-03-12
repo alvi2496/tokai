@@ -1,7 +1,7 @@
 import { Reader } from '../../utils/Reader'
 import { Text } from '../models/Text'
 import fs from 'fs'
-import { TextProcessor } from '../../utils/TextProcessor'
+import { TextProcessor, Dictionary } from '../../utils/TextProcessor'
 import { Saver } from '../../utils/Saver'
 
 export class Scraper {
@@ -16,6 +16,8 @@ export class Scraper {
         let text: string = ''
         const logHead: string = `Starting Parsing on ${new Date().toDateString()} at ${new Date().toTimeString()}\n`
         await new Saver(logHead).toLog('PdfDocument')
+        const dictionary = await new Dictionary().create()
+        const textProcessor = new TextProcessor()
         const folders = await this.folderNames(this.fileDir)
         let fileNumber: number = 0
         for(let folder of folders) {
@@ -30,7 +32,7 @@ export class Scraper {
             }
         }
         console.log(`${fileNumber} files parsed`)
-        text = await new TextProcessor().process(text)
+        text = await textProcessor.process(text, dictionary)
         return text
     }
 

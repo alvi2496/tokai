@@ -1,5 +1,4 @@
-import { Parser } from 'json2csv'
-import json2csv from 'json2csv'
+import jsonexport from 'jsonexport'
 import fs from 'fs'
 
 export class Saver {
@@ -14,17 +13,17 @@ export class Saver {
             fs.mkdirSync(`${process.cwd()}/log`)
     }
 
-    public toCsv = async (dir: string) => {
-        const parser = new Parser()
-        const csv = await parser.parse(this.data)
-        if (!fs.existsSync(dir)) 
+    public toCsv = async (dir: string, header=true) => {
+        jsonexport(this.data, {includeHeaders: header}, (err: any, csv: any) => {
+            if (!fs.existsSync(dir)) 
             fs.mkdirSync(dir)
-        fs.appendFile(`${dir}/data.csv`, csv, async (err) => {
-            if(err) {
-                return console.log(err)
-            }
-            console.log('Chunk saved!')
-        })
+            fs.appendFile(`${dir}/data.csv`, csv + '\n', async (err) => {
+                if(err) {
+                    return console.log(err)
+                }
+                console.log('Chunk saved!')
+            })
+        })   
     }
 
     public toTxt = async (dir: string) => {

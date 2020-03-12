@@ -26,6 +26,7 @@
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
     "json2csv": "^4.5.4",
+    "jsonexport": "^2.4.1",
     "nodehun": "^3.0.1",
     "pdf.js-extract": "^0.1.4",
     "stopword": "^0.3.4",
