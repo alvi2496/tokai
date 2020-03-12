@@ -2,7 +2,7 @@ import * as data from '../data/tags.json'
 import { IndexPage } from "./IndexPage"
 import { DetailPage } from "./DetailPage"
 import { Fetcher } from "../../utils/Fetcher"
-import { TextProcessor } from '../../utils/TextProcessor'
+import { TextProcessor, Dictionary } from '../../utils/TextProcessor'
 import { Saver } from '../../utils/Saver'
 
 export class Scraper {
@@ -16,6 +16,7 @@ export class Scraper {
     public scrape = async () => {
         const logHead: string = `Starting Parsing on ${new Date().toDateString()} at ${new Date().toTimeString()}\n`
         await new Saver(logHead).toLog('StackOverflow')
+        const dictionary = await new Dictionary().create()
         const textProcessor = new TextProcessor()
         for(let category of data.categories) {
             for(let tag of category.tags){
@@ -27,7 +28,6 @@ export class Scraper {
                     let indexPage = await new Fetcher(url).fetchPage()
                     let questionSummary = await new IndexPage(indexPage).questionSummary()
                     for(let question of questionSummary.questions) {
-                        let textProcessor: any = new TextProcessor()
                         let detailPage = await new Fetcher(this.baseUrl + question.href).fetchPage()
                         let questionDetail = await new DetailPage(detailPage).questionDetail()
                         let questionText: any = questionDetail.question.header + " " + questionDetail.question.body
@@ -35,9 +35,10 @@ export class Scraper {
                         let commentText: any = await questionDetail.comments.map((comment: {text: string}) => comment.text).join(" ")
 
                         // process the texts
-                        questionText = await textProcessor.process(questionText)
-                        answerText = await textProcessor.process(answerText)
-                        commentText = await textProcessor.process(commentText)
+                        questionText = await textProcessor.process(questionText, dictionary)
+                        answerText = await textProcessor.process(answerText, dictionary)
+                        commentText = await textProcessor.process(commentText, dictionary)
+
                         rows.push({
                             url: question.href,
                             question: questionText,
@@ -46,7 +47,6 @@ export class Scraper {
                             tag: tag.name,
                             label: category.label
                         })
-                        textProcessor = null
                         detailPage = null
                         questionDetail = null
                         questionText = null

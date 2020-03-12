@@ -1,4 +1,5 @@
 import { Parser } from 'json2csv'
+import json2csv from 'json2csv'
 import fs from 'fs'
 
 export class Saver {

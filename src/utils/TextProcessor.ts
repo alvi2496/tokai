@@ -4,9 +4,12 @@ import fs from 'fs'
 
 export class TextProcessor {
 
-    constructor(){}
+    nodehun: any
 
-    public process = async (text: any) => {
+    constructor(){
+    }
+
+    public process = async (text: any, dictionary: any = null) => {
         // lowercase and trim any leading or trailing spaces
         text = await text.toLowerCase().trim()
         //remove all the urls
@@ -23,11 +26,13 @@ export class TextProcessor {
         text = await text.replace(/[0-9]/g, '')
         // remove stopwords
         text = await this.removeStopwords(text)
-        // replace misspelled words
-        text = await this.replaceMisspelledWords(text)
-        // again remove all the words with length < 3
-        text = await text.replace(/(\b(\w{1,3})\b(\s|$))/g,'')
-
+        if(dictionary) {
+            // replace misspelled words
+            text = await this.replaceMisspelledWords(text, dictionary)
+            // again remove all the words with length < 3
+            text = await text.replace(/(\b(\w{1,3})\b(\s|$))/g,'')
+        }
+        
         return text
     }
 
@@ -48,11 +53,10 @@ export class TextProcessor {
         return text
     }
 
-    replaceMisspelledWords = async (text: string) => {
-        let nodehun: any = await this.createDictionary()
-        let words: any = await this.divideWords(text)
+    replaceMisspelledWords = async (text: string, dictionary: any) => {
+        let words: any = await this.divideWords(text, dictionary)
         for(let word of words.wrong) {
-            let suggestions: any = await nodehun.suggest(word)
+            let suggestions: any = await dictionary.suggest(word)
             if(suggestions){
                 for(let suggestion of suggestions) {
                     if(words.right.includes(suggestion))
@@ -61,26 +65,27 @@ export class TextProcessor {
             }
             suggestions = null
         }
-        nodehun = null
         return words.right.join(" ")
     }
 
-    divideWords = async (text: string) => {
-        let nodehun = await this.createDictionary()
+    divideWords = async (text: string, dictionary: any) => {
         let textArray = text.split(" ")
         const right = [], wrong = []
         for(let word of textArray) {
             let trimed = word.trim()
-            if(await nodehun.spell(trimed))
+            if(await dictionary.spell(trimed))
                 if(trimed !== '') right.push(trimed)
             else
                 wrong.push(trimed)
         }
-
         return {right, wrong}
     }
+}
 
-    createDictionary = async () => {
+export class Dictionary {
+    constructor() {}
+
+    create = async () => {
         const en_GB_affix = fs.readFileSync(`${process.cwd()}/dictionary/en_GB.aff`)
         const en_GB_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_GB.dic`)
         const en_AU_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_AU.dic`)
