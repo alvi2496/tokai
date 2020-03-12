@@ -9,7 +9,7 @@ export class TextProcessor {
     constructor(){
     }
 
-    public process = async (text: any, dictionary: any = null) => {
+    public process = async (text: any, dictionary: any = null, literature: any = null) => {
         // lowercase and trim any leading or trailing spaces
         text = await text.toLowerCase().trim()
         //remove all the urls
@@ -28,7 +28,7 @@ export class TextProcessor {
         text = await this.removeStopwords(text)
         if(dictionary) {
             // replace misspelled words
-            text = await this.replaceMisspelledWords(text, dictionary)
+            text = await this.replaceMisspelledWords(text, dictionary, literature)
             // again remove all the words with length < 3
             text = await text.replace(/(\b(\w{1,3})\b(\s|$))/g,'')
         }
@@ -53,8 +53,9 @@ export class TextProcessor {
         return text
     }
 
-    replaceMisspelledWords = async (text: string, dictionary: any) => {
+    replaceMisspelledWords = async (text: string, dictionary: any, literature: any) => {
         let words: any = await this.divideWords(text, dictionary)
+        if(literature) words.right = literature.split(" ")
         for(let word of words.wrong) {
             let suggestions: any = await dictionary.suggest(word)
             if(suggestions){
@@ -85,7 +86,7 @@ export class TextProcessor {
 export class Dictionary {
     constructor() {}
 
-    create = async () => {
+    public create = async () => {
         const en_GB_affix = fs.readFileSync(`${process.cwd()}/dictionary/en_GB.aff`)
         const en_GB_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_GB.dic`)
         const en_AU_dic = fs.readFileSync(`${process.cwd()}/dictionary/en_AU.dic`)
@@ -99,5 +100,17 @@ export class Dictionary {
         await nodehun.addDictionary(en_ZA_dic)
         
         return nodehun
+    }
+}
+
+export class Literature {
+    constructor(){}
+
+    public create = async () => {
+        const literature = fs.readFile(`${process.cwd()}/data/PdfDocument/data.txt`, (err, data) => {
+            if(err)
+                return console.log(err)
+            return data
+        })
     }
 }

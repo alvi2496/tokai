@@ -5,46 +5,114 @@
             "tags" : [
                 {
                     "name": "design-patterns",
-                    "url": "https://stackoverflow.com/questions/tagged/design-patterns?tab=Newest"
+                    "url": "https://stackoverflow.com/questions/tagged/design-patterns?tab=Newest",
+                    "limit": 100000
                 },
                 {
                     "name": "software-design",
-                    "url": "https://stackoverflow.com/questions/tagged/software-design?tab=Newest"
+                    "url": "https://stackoverflow.com/questions/tagged/software-design?tab=Newest",
+                    "limit": 100000
                 },
                 {
                     "name": "class-design",
-                    "url": "https://stackoverflow.com/questions/tagged/class-design?tab=Newest"
+                    "url": "https://stackoverflow.com/questions/tagged/class-design?tab=Newest",
+                    "limit": 100000
                 },
                 {
                     "name": "design-principles",
-                    "url": "https://stackoverflow.com/questions/tagged/design-principles?tab=Newest"
+                    "url": "https://stackoverflow.com/questions/tagged/design-principles?tab=Newest",
+                    "limit": 100000
                 },
                 {
                     "name": "system-design",
-                    "url": "https://stackoverflow.com/questions/tagged/system-design?tab=Newest"
+                    "url": "https://stackoverflow.com/questions/tagged/system-design?tab=Newest",
+                    "limit": 100000
                 },
                 {
                     "name": "application-design",
-                    "url": "https://stackoverflow.com/questions/tagged/application-design?tab=Newest"
+                    "url": "https://stackoverflow.com/questions/tagged/application-design?tab=Newest",
+                    "limit": 100000
                 },
                 {
                     "name": "code-design",
-                    "url": "https://stackoverflow.com/questions/tagged/code-design?tab=Newest"
+                    "url": "https://stackoverflow.com/questions/tagged/code-design?tab=Newest",
+                    "limit": 100000
                 },
                 {
                     "name": "api-design",
-                    "url": "https://stackoverflow.com/questions/tagged/api-design?tab=Newest"
+                    "url": "https://stackoverflow.com/questions/tagged/api-design?tab=Newest",
+                    "limit": 100000
                 },
                 {
                     "name": "language-design",
-                    "url": "https://stackoverflow.com/questions/tagged/language-design?tab=Newest"
+                    "url": "https://stackoverflow.com/questions/tagged/language-design?tab=Newest",
+                    "limit": 100000
+                },
+                {
+                    "name": "dependency-injection",
+                    "url": "https://stackoverflow.com/questions/tagged/dependency-injection?tab=Newest",
+                    "limit": 100000
+                },
+                {
+                    "name": "architecture",
+                    "url": "https://stackoverflow.com/questions/tagged/architecture?tab=Newest",
+                    "limit": 100000
                 }
             ]
         },
         {
             "label": "general",
             "tags": [
-                
+                {
+                    "name": "javascript",
+                    "url": "https://stackoverflow.com/questions/tagged/javascript?tab=Newest",
+                    "limit": 5000
+                },
+                {
+                    "name": "java",
+                    "url": "https://stackoverflow.com/questions/tagged/java?tab=Newest",
+                    "limit": 5000
+                },
+                {
+                    "name": "c#",
+                    "url": "https://stackoverflow.com/questions/tagged/c%23?tab=Newest",
+                    "limit": 5000
+                },
+                {
+                    "name": "python",
+                    "url": "https://stackoverflow.com/questions/tagged/python?tab=Newest",
+                    "limit": 5000
+                },
+                {
+                    "name": "php",
+                    "url": "https://stackoverflow.com/questions/tagged/php?tab=Newest",
+                    "limit": 5000
+                },
+                {
+                    "name": "node.js",
+                    "url": "https://stackoverflow.com/questions/tagged/node.js?tab=Newest",
+                    "limit": 5000
+                },
+                {
+                    "name": "django",
+                    "url": "https://stackoverflow.com/questions/tagged/django?tab=Newest",
+                    "limit": 5000
+                },
+                {
+                    "name": "ruby-on-rails",
+                    "url": "https://stackoverflow.com/questions/tagged/ruby-on-rails?tab=Newest",
+                    "limit": 5000
+                },
+                {
+                    "name": "android",
+                    "url": "https://stackoverflow.com/questions/tagged/android?tab=Newest",
+                    "limit": 5000
+                },
+                {
+                    "name": "ios",
+                    "url": "https://stackoverflow.com/questions/tagged/ios?tab=Newest",
+                    "limit": 5000
+                }
             ]
         }
     ]    

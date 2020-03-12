@@ -2,7 +2,7 @@ import * as data from '../data/tags.json'
 import { IndexPage } from "./IndexPage"
 import { DetailPage } from "./DetailPage"
 import { Fetcher } from "../../utils/Fetcher"
-import { TextProcessor, Dictionary } from '../../utils/TextProcessor'
+import { TextProcessor, Dictionary, Literature } from '../../utils/TextProcessor'
 import { Saver } from '../../utils/Saver'
 
 export class Scraper {
@@ -17,11 +17,13 @@ export class Scraper {
         const logHead: string = `Starting Parsing on ${new Date().toDateString()} at ${new Date().toTimeString()}\n`
         await new Saver(logHead).toLog('StackOverflow')
         const dictionary = await new Dictionary().create()
+        const literature = await new Literature().create()
         const textProcessor = new TextProcessor()
         let firstChunk = true
         for(let category of data.categories) {
             for(let tag of category.tags){
                 let url: any = tag.url
+                let limit = 0
                 while(url !== undefined && url !== null) {
                     let rows: any = []
                     console.log(`Parsing data from ${url}`)
@@ -36,9 +38,9 @@ export class Scraper {
                         let commentText: any = await questionDetail.comments.map((comment: {text: string}) => comment.text).join(" ")
 
                         // process the texts
-                        questionText = await textProcessor.process(questionText, dictionary)
-                        answerText = await textProcessor.process(answerText, dictionary)
-                        commentText = await textProcessor.process(commentText, dictionary)
+                        questionText = await textProcessor.process(questionText, dictionary, literature)
+                        answerText = await textProcessor.process(answerText, dictionary, literature)
+                        commentText = await textProcessor.process(commentText, dictionary, literature)
 
                         rows.push({
                             url: question.href,
@@ -53,6 +55,8 @@ export class Scraper {
                         questionText = null
                         answerText = null
                         commentText = null
+
+                        limit = limit + 1
                     }
                     if(firstChunk){
                         await new Saver(rows).toCsv(process.cwd() + '/data/StackOverflow')
@@ -62,7 +66,7 @@ export class Scraper {
                         await new Saver(rows).toCsv(process.cwd() + '/data/StackOverflow', false)
                     rows = null
                     indexPage = null
-                    url = questionSummary.nextPageUrl === undefined ? null : this.baseUrl + questionSummary.nextPageUrl
+                    url = questionSummary.nextPageUrl === undefined || limit > tag.limit ? null : this.baseUrl + questionSummary.nextPageUrl
                     questionSummary = null
                 }
             }
