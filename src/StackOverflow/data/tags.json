@@ -104,6 +104,11 @@
                     "limit": 5000
                 },
                 {
+                    "name": "rust",
+                    "url": "https://stackoverflow.com/questions/tagged/rust?tab=Newest",
+                    "limit": 5000
+                },
+                {
                     "name": "android",
                     "url": "https://stackoverflow.com/questions/tagged/android?tab=Newest",
                     "limit": 5000
