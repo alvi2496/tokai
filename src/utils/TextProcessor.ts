@@ -55,12 +55,13 @@ export class TextProcessor {
 
     replaceMisspelledWords = async (text: string, dictionary: any, literature: any) => {
         let words: any = await this.divideWords(text, dictionary)
-        if(literature) words.right = literature.split(" ")
         for(let word of words.wrong) {
             let suggestions: any = await dictionary.suggest(word)
             if(suggestions){
                 for(let suggestion of suggestions) {
-                    if(words.right.includes(suggestion))
+                    if(literature && literature.includes(suggestion))
+                        words.right.push(suggestion)
+                    else if(!literature && words.right.includes(suggestion))
                         words.right.push(suggestion)
                 }
             }
@@ -107,10 +108,13 @@ export class Literature {
     constructor(){}
 
     public create = async () => {
-        const literature = fs.readFile(`${process.cwd()}/data/PdfDocument/data.txt`, (err, data) => {
-            if(err)
-                return console.log(err)
-            return data
-        })
+        return new Promise((resolve, reject) => {
+            fs.readFile(`${process.cwd()}/data/PdfDocument/data.txt`, "utf-8", (err, data) => {
+                if(err)
+                    return reject(err)
+                const literature = data.split(' ')
+                return resolve(literature)
+            })
+        }) 
     }
 }

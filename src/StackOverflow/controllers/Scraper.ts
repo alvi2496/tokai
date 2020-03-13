@@ -17,7 +17,7 @@ export class Scraper {
         const logHead: string = `Starting Parsing on ${new Date().toDateString()} at ${new Date().toTimeString()}\n`
         await new Saver(logHead).toLog('StackOverflow')
         const dictionary = await new Dictionary().create()
-        const literature = await new Literature().create()
+        let literature: any = await new Literature().create()
         const textProcessor = new TextProcessor()
         let firstChunk = true
         for(let category of data.categories) {

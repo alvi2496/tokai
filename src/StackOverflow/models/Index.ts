@@ -17,8 +17,8 @@ export class Index extends StackOverflow {
     }
 
     private getNextPageUrl = async () => {
-        const nextPageUrl = this.$('.page-numbers.next').parent().attr('href')
-        return nextPageUrl
+        const nextPageUrl = this.$('.s-pagination.pager.fl').find('.s-pagination--item')
+        return nextPageUrl[(nextPageUrl.length - 1).toString()].attribs.href
     }
 
     public collect = async () => {
