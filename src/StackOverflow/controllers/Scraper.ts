@@ -28,46 +28,50 @@ export class Scraper {
                     let rows: any = []
                     console.log(`Parsing data from ${url}`)
                     await new Saver(`Parsing data from ${url}\n`).toLog('StackOverflow')
-                    let indexPage = await new Fetcher(url).fetchPage()
-                    let questionSummary = await new IndexPage(indexPage).questionSummary()
-                    for(let question of questionSummary.questions) {
-                        let detailPage = await new Fetcher(this.baseUrl + question.href).fetchPage()
-                        let questionDetail = await new DetailPage(detailPage).questionDetail()
-                        let questionText: any = questionDetail.question.header + " " + questionDetail.question.body
-                        let answerText: any = await questionDetail.answers.map((answer: { text: string }) => answer.text).join(" ")
-                        let commentText: any = await questionDetail.comments.map((comment: {text: string}) => comment.text).join(" ")
-
-                        // process the texts
-                        questionText = await textProcessor.process(questionText, dictionary, literature)
-                        answerText = await textProcessor.process(answerText, dictionary, literature)
-                        commentText = await textProcessor.process(commentText, dictionary, literature)
-
-                        rows.push({
-                            url: question.href,
-                            question: questionText,
-                            answer: answerText,
-                            comment: commentText,
-                            tag: tag.name,
-                            label: category.label
-                        })
-                        detailPage = null
-                        questionDetail = null
-                        questionText = null
-                        answerText = null
-                        commentText = null
-
-                        limit = limit + 1
+                    try{
+                        let indexPage = await new Fetcher(url).fetchPage()
+                        let questionSummary = await new IndexPage(indexPage).questionSummary()
+                        for(let question of questionSummary.questions) {
+                            let detailPage = await new Fetcher(this.baseUrl + question.href).fetchPage()
+                            let questionDetail = await new DetailPage(detailPage).questionDetail()
+                            let questionText: any = questionDetail.question.header + " " + questionDetail.question.body
+                            let answerText: any = await questionDetail.answers.map((answer: { text: string }) => answer.text).join(" ")
+                            let commentText: any = await questionDetail.comments.map((comment: {text: string}) => comment.text).join(" ")
+    
+                            // process the texts
+                            questionText = await textProcessor.process(questionText, dictionary, literature)
+                            answerText = await textProcessor.process(answerText, dictionary, literature)
+                            commentText = await textProcessor.process(commentText, dictionary, literature)
+    
+                            rows.push({
+                                url: question.href,
+                                question: questionText,
+                                answer: answerText,
+                                comment: commentText,
+                                tag: tag.name,
+                                label: category.label
+                            })
+                            detailPage = null
+                            questionDetail = null
+                            questionText = null
+                            answerText = null
+                            commentText = null
+    
+                            limit = limit + 1
+                        }
+                        if(firstChunk){
+                            await new Saver(rows).toCsv(process.cwd() + '/data/StackOverflow')
+                            firstChunk = false
+                        } 
+                        else
+                            await new Saver(rows).toCsv(process.cwd() + '/data/StackOverflow', false)
+                        rows = null
+                        indexPage = null
+                        url = questionSummary.nextPageUrl === undefined || limit > tag.limit ? null : this.baseUrl + questionSummary.nextPageUrl
+                        questionSummary = null
+                    } catch(e) {
+                        continue
                     }
-                    if(firstChunk){
-                        await new Saver(rows).toCsv(process.cwd() + '/data/StackOverflow')
-                        firstChunk = false
-                    } 
-                    else
-                        await new Saver(rows).toCsv(process.cwd() + '/data/StackOverflow', false)
-                    rows = null
-                    indexPage = null
-                    url = questionSummary.nextPageUrl === undefined || limit > tag.limit ? null : this.baseUrl + questionSummary.nextPageUrl
-                    questionSummary = null
                 }
             }
         }
