@@ -13,16 +13,26 @@ export class Saver {
             fs.mkdirSync(`${process.cwd()}/log`)
     }
 
-    public toCsv = async (dir: string, header=true) => {
+    public toCsv = async (dir: string, header=true, fileName: any = null) => {
         jsonexport(this.data, {includeHeaders: header}, (err: any, csv: any) => {
             if (!fs.existsSync(dir)) 
             fs.mkdirSync(dir)
-            fs.appendFile(`${dir}/data.csv`, csv + '\n', async (err) => {
-                if(err) {
-                    return console.log(err)
-                }
-                console.log('Chunk saved!')
-            })
+            if(fileName){
+                fs.appendFile(`${dir}/${fileName}.csv`, csv + '\n', async (err) => {
+                    if(err) {
+                        return console.log(err)
+                    }
+                    console.log(`${fileName} saved`)
+                }) 
+            }
+            else {
+                fs.appendFile(`${dir}/data.csv`, csv + '\n', async (err) => {
+                    if(err) {
+                        return console.log(err)
+                    }
+                    console.log('Chunk saved!')
+                })
+            }
         })   
     }
 

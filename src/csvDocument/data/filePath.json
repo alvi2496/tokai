@@ -1,0 +1,24 @@
+{
+    "files": [
+        {
+            "name": "brunet2014",
+            "path": "/home/alvi/Documents/datasets/brunet2014.csv"
+        },
+        {
+            "name": "shakiba16",
+            "path": "/home/alvi/Documents/datasets/shakiba16.csv"
+        },
+        {
+            "name": "viviani2018",
+            "path": "/home/alvi/Documents/datasets/viviani2018.csv"
+        },
+        {
+            "name": "satd",
+            "path": "/home/alvi/Documents/datasets/code_comments.csv"
+        },
+        {
+            "name": "so",
+            "path": "/home/alvi/Documents/datasets/so_design.csv"
+        }
+    ]
+}

@@ -1,5 +1,5 @@
-import { CsvDocument } from './models/CsvDocument'
+import { Scraper } from './controllers/Scraper'
 
-new CsvDocument().read().then((file) => {
-    console.log(file)
+new Scraper().scrape().then(() => {
+    console.log('Job complete')
 })
