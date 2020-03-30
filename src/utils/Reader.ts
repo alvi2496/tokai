@@ -1,4 +1,6 @@
 import { PDFExtract } from 'pdf.js-extract'
+import * as csv from 'fast-csv'
+import fs from 'fs'
 
 export class Reader {
     
@@ -19,6 +21,17 @@ export class Reader {
                     resolve(data)
                 }
             })
+        })
+    }
+
+    public readCsv = async (headers: boolean = false) => {
+        return new Promise((resolve, reject) => {
+            let rows: any = []
+            fs.createReadStream(this.url)
+            .pipe(csv.parse({ headers: headers }))
+            .on('error', error => reject(error))
+            .on('data', row => rows.push(row))
+            .on('end', () => resolve(rows))
         })
     }
 }
