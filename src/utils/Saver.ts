@@ -30,7 +30,7 @@ export class Saver {
                     if(err) {
                         return console.log(err)
                     }
-                    console.log('Chunk saved!')
+                    // console.log('Chunk saved!')
                 })
             }
         })   
