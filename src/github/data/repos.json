@@ -1,0 +1,50 @@
+{
+    "categories": {
+        "waf": {
+            "django": {
+                "prs": "https://github.com/django/django/pulls",
+                "it": null
+            },
+            "vue": {
+                "prs": "https://github.com/vuejs/vue/pulls",
+                "it": "https://github.com/vuejs/vue/issues"
+            },
+            "express": {
+                "prs": "https://github.com/expressjs/express/pulls",
+                "it": "https://github.com/expressjs/express/issues"
+            },
+            "laravel": {
+                "prs": "https://github.com/laravel/laravel/pulls",
+                "it": null
+            },
+            "react": {
+                "prs": "https://github.com/facebook/react/pulls",
+                "it": "https://github.com/facebook/react/issues"
+            },
+            "": {
+                "prs": "",
+                "it": ""
+            },
+            "": {
+                "prs": "",
+                "it": ""
+            },
+            "": {
+                "prs": "",
+                "it": ""
+            },
+            "": {
+                "prs": "",
+                "it": ""
+            },
+            "": {
+                "prs": "",
+                "it": ""
+            },
+            "": {
+                "prs": "",
+                "it": ""
+            }
+        }
+    }
+}

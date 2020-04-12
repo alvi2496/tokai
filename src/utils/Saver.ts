@@ -47,7 +47,7 @@ export class Saver {
         })
     }
 
-    toLog = async (dir: string) => {
+    public toLog = async (dir: string) => {
        fs.appendFile(`${process.cwd()}/log/${dir}.log`, this.data, async (err) => {
             if(err) {
                 return console.log(err)

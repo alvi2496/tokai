@@ -29,8 +29,8 @@ export class TextProcessor {
         if(dictionary) {
             // replace misspelled words
             text = await this.replaceMisspelledWords(text, dictionary, literature)
-            // again remove all the words with length < 3
-            text = await text.replace(/(\b(\w{1,3})\b(\s|$))/g,'')
+            // again remove all the words with length < 2
+            text = await text.replace(/(\b(\w{1,2})\b(\s|$))/g,'')
         }
         
         return text
