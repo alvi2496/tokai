@@ -34,8 +34,8 @@ export class Scraper {
                     if((data_length - done) < chunk){
                         chunk = extra
                     }
+                    await bar.update(done)
                 }
-                await bar.update(done)
             }
             bar.stop()
             console.log(filedir + " done")
