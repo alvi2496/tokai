@@ -26,7 +26,7 @@ export class Scraper {
             await bar.start(infile.length, 0)
             let done = 0
             for(let line of infile) {
-                await rows.push(await textProcessor.process(line, dictionary, literature))
+                await rows.push(await textProcessor.process(line))
                 if(rows.length === chunk){
                     await new Saver(rows).toCsv(process.cwd() + '/data/github/pulls.csv', false)
                     rows = []
