@@ -20,8 +20,8 @@ export class Scraper {
         for(let filedir of files){
             const infile: any = await new Reader(process.cwd() + '/src/github/data/pr_chunks/' + filedir).readLargeCsv()
             let data_length = infile.length
-            let extra = data_length % 10
-            let chunk = (data_length - extra) / 10
+            let extra = data_length % 100
+            let chunk = (data_length - extra) / 100
             let rows: any = []
             await bar.start(infile.length, 0)
             let done = 0
@@ -34,8 +34,8 @@ export class Scraper {
                     if((data_length - done) < chunk){
                         chunk = extra
                     }
-                    await bar.update(done)
                 }
+                await bar.update(done)
             }
             bar.stop()
             console.log(filedir + " done")
