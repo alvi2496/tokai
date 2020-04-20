@@ -28,7 +28,7 @@ export class Scraper {
             for(let line of infile) {
                 await rows.push(await textProcessor.process(line))
                 if(rows.length === chunk){
-                    await new Saver(rows).toCsv(process.cwd() + '/data/github/pulls.csv', false)
+                    await new Saver(rows).toCsv(process.cwd() + '/data/github/', false)
                     rows = []
                     done += chunk
                     if((data_length - done) < chunk){
