@@ -1,3 +1,4 @@
+import fs from 'fs'
 import * as data from '../data/sources.json'
 import { Saver } from "../../utils/Saver"
 import { Reader } from "../../utils/Reader"
@@ -15,8 +16,9 @@ export class Scraper {
         let literature: any = await new Literature().create()
         const textProcessor = new TextProcessor()
         const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic)
-        for(let category of data.categories){
-            const infile: any = await new Reader(category.path).readLargeCsv()
+        const files = fs.readdirSync(process.cwd() + '/src/github/data/pr_chunks')
+        for(let filedir of files){
+            const infile: any = await new Reader(process.cwd() + '/src/github/data/pr_chunks/' + filedir).readLargeCsv()
             let data_length = infile.length
             let extra = data_length % 10
             let chunk = (data_length - extra) / 10
@@ -26,7 +28,7 @@ export class Scraper {
             for(let line of infile) {
                 await rows.push(await textProcessor.process(line, dictionary, literature))
                 if(rows.length === chunk){
-                    await new Saver(rows).toCsv(process.cwd() + '/data/github', false)
+                    await new Saver(rows).toCsv(process.cwd() + '/data/github/pulls.csv', false)
                     rows = []
                     done += chunk
                     if((data_length - done) < chunk){
@@ -36,7 +38,7 @@ export class Scraper {
                 }
             }
             bar.stop()
-            console.log(category.type + " done")
+            console.log(filedir + " done")
         }
     }
 }
