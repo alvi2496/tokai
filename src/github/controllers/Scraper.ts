@@ -29,12 +29,12 @@ export class Scraper {
                 await rows.push(await textProcessor.process(line))
                 if(rows.length === chunk){
                     await new Saver(rows).toCsv(process.cwd() + '/data/github/', false)
-                    rows = []
                     done += chunk
                     if((data_length - done) < chunk){
                         chunk = extra
                     }
                     await bar.update(done)
+                    rows = [null]
                 }
             }
             bar.stop()
