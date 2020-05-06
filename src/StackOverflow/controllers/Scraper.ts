@@ -71,7 +71,9 @@ export class Scraper {
                         url = questionSummary.nextPageUrl === undefined || limit > tag.limit ? null : this.baseUrl + questionSummary.nextPageUrl
                         questionSummary = null
                     } catch(e) {
-                        continue
+                        setTimeout(() => {
+                            
+                        }, 5000)
                     }
                 }
             }
