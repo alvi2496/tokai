@@ -13,7 +13,7 @@ export class Fetcher {
             const page = await axios.get(this.url)
             return page.data
         } catch (e) {
-            console.log(e)
+            // console.log(e)
         }
     } 
 }
