@@ -34,6 +34,7 @@ export class Scraper {
                         for(let question of questionSummary.questions) {
                             let detailPage = await new Fetcher(this.baseUrl + question.href).fetchPage()
                             let questionDetail = await new DetailPage(detailPage).questionDetail()
+                            console.log(questionDetail)
                             let questionText: any = questionDetail.question.header + " " + questionDetail.question.body
                             let answerText: any = await questionDetail.answers.map((answer: { text: string }) => answer.text).join(" ")
                             let commentText: any = await questionDetail.comments.map((comment: {text: string}) => comment.text).join(" ")
@@ -49,7 +50,8 @@ export class Scraper {
                                 answer: answerText,
                                 comment: commentText,
                                 tag: tag.name,
-                                label: category.label
+                                label: category.label,
+                                tags: questionDetail.question.tags 
                             })
                             detailPage = null
                             questionDetail = null

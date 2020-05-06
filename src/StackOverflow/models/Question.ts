@@ -21,10 +21,21 @@ export class Question extends StackOverflow{
         return body.trim()
     }
 
+    private getTags = async () => {
+        const postTags = this.$('.post-taglist').find('.post-tag')
+        let tags: any = []
+        for(let tag of postTags){
+            tags.push(this.$(tag).text())
+        }
+        return tags.join(';')
+    }
+
     public collect = async () => {
         const header = await this.getHeader()
         const url = await this.getUrl()
         const body = await this.getBody()
-        return { header, url, body }
+        const tags = await this.getTags()
+
+        return { header, url, body, tags }
     }
 }

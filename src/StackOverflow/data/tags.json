@@ -66,57 +66,57 @@
                 {
                     "name": "javascript",
                     "url": "https://stackoverflow.com/questions/tagged/javascript?tab=Newest",
-                    "limit": 5000
+                    "limit": 10000
                 },
                 {
                     "name": "java",
                     "url": "https://stackoverflow.com/questions/tagged/java?tab=Newest",
-                    "limit": 5000
+                    "limit": 10000
                 },
                 {
                     "name": "c#",
                     "url": "https://stackoverflow.com/questions/tagged/c%23?tab=Newest",
-                    "limit": 5000
+                    "limit": 10000
                 },
                 {
                     "name": "python",
                     "url": "https://stackoverflow.com/questions/tagged/python?tab=Newest",
-                    "limit": 5000
+                    "limit": 10000
                 },
                 {
                     "name": "php",
                     "url": "https://stackoverflow.com/questions/tagged/php?tab=Newest",
-                    "limit": 5000
+                    "limit": 10000
                 },
                 {
                     "name": "node.js",
                     "url": "https://stackoverflow.com/questions/tagged/node.js?tab=Newest",
-                    "limit": 5000
+                    "limit": 10000
                 },
                 {
                     "name": "django",
                     "url": "https://stackoverflow.com/questions/tagged/django?tab=Newest",
-                    "limit": 5000
+                    "limit": 10000
                 },
                 {
                     "name": "ruby-on-rails",
                     "url": "https://stackoverflow.com/questions/tagged/ruby-on-rails?tab=Newest",
-                    "limit": 5000
+                    "limit": 10000
                 },
                 {
                     "name": "rust",
                     "url": "https://stackoverflow.com/questions/tagged/rust?tab=Newest",
-                    "limit": 5000
+                    "limit": 10000
                 },
                 {
                     "name": "android",
                     "url": "https://stackoverflow.com/questions/tagged/android?tab=Newest",
-                    "limit": 5000
+                    "limit": 10000
                 },
                 {
                     "name": "ios",
                     "url": "https://stackoverflow.com/questions/tagged/ios?tab=Newest",
-                    "limit": 5000
+                    "limit": 10000
                 }
             ]
         }
